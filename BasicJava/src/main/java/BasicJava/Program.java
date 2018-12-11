@@ -1,3 +1,5 @@
+package BasicJava;
+
 import java.util.Scanner;
 
 public class Program {
@@ -5,13 +7,19 @@ public class Program {
   public static void main(String[] args) {
     sc = new Scanner(System.in);
     Lotto lotto = new Lotto(sc);
-    
-    // lotto.number(); 번호 추출
-    // lotto.writenuber(); 파일 쓰기 ..
-    
-     
-     
-     
+
+    //1. 1~45까지의 난수를 발생시켜 6개의 배열에 담으세요
+    //2. 배열에 담긴 6개의 배열값은 중복값이 나오면 안되요
+    //3. 배열에 있는 6개의 값을 낮은 순으로 정렬시키세요
+    //4. 배열에 담긴 6개의 값을 파일로 저장하세요 (Lotto.txt)
+
+    // 위 과제를
+    // 1. Array
+
+    // s2. Collection 을 사용하여 만드세요
+
+
+
     while (true) {
       System.out.println("\n원하시는 작업을 선택하세요. \n");
       System.out.print("1. 로또 번호 난수 발생");
@@ -21,7 +29,7 @@ public class Program {
       System.out.print("\t5. 사용자 로또 번호 입력(treeset)");
       System.out.print("\t6. 결과 출력(treeset)\n");
       System.out.print("q or Q. 프로그램 종료! ");
-      
+
       String choose = sc.nextLine();
       if (choose.equals("1")) {
         lotto.randomNumberInit();
