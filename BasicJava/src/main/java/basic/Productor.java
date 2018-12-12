@@ -1,4 +1,4 @@
-package BasicJava;
+package basic;
 
 public class Productor {
 

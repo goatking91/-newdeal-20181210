@@ -1,4 +1,4 @@
-package BasicJava;
+package basic;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
