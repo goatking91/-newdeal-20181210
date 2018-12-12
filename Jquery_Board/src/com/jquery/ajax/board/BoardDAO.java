@@ -59,5 +59,9 @@ public class BoardDAO {
 		}
 		return false;
 	}
-
+	
+	public BoardVO getBoardDetail(int num){
+	  return boardList.get(num);
+      
+  }
 }

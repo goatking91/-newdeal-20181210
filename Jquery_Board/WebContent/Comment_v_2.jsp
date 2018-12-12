@@ -1,21 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ page import="com.jquery.ajax.comment.CommentDAO" %>
-<%@ page import="com.jquery.ajax.comment.CommentVO" %>
-<%@ page import ="java.util.List" %>
+	pageEncoding="UTF-8"%>
+<%@ page import="com.jquery.ajax.comment.CommentDAO"%>
+<%@ page import="com.jquery.ajax.comment.CommentVO"%>
+<%@ page import="java.util.List"%>
 <%
-	//글번호 
-	int bbsSeq = 1;
-	CommentDAO dao = CommentDAO.getInstance();
-	List<CommentVO> commentlist = dao.getCommentList(bbsSeq);
+  //글번호 
+			int bbsSeq = 1;
+			CommentDAO dao = CommentDAO.getInstance();
+			List<CommentVO> commentlist = dao.getCommentList(bbsSeq);
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>CommentLIST</title>
-	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-	<script type="text/javascript">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>CommentLIST</title>
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript">
 		$(function(){
 			$('#addBtn').on("click",function(){
 				if($.trim($('#comment').val()) == "")
@@ -34,7 +34,7 @@
 				//2. javaScript 객체형태로
 				//{bbSeq : 1 , comment:'안녕하세요'}
 				var data2 = {
-						      bbsSeq  : "<%= bbsSeq %>" ,
+						      bbsSeq  : "<%=bbsSeq%>" ,
 						      comment : $.trim($('#comment').val())  
 						
 				            };
@@ -90,42 +90,52 @@
 			$('#container').on("click","button",function(){
 				//alert("클릭");
 				var data = {
-					      bbsSeq  : "<%= bbsSeq %>" ,
-					      seq : $(this).attr("seq")     //delete * from board where id=?
-					
-			            };
-				//$.getJSON().. 사용하여 삭제 처리를 하세요 
-				//$.getJSON('CommentDel.jsp',data)
-				//각자 코드 구현
+					      bbsSeq  : "<%=bbsSeq%>",
+				seq : $(this).attr("seq")
+			//delete * from board where id=?
+			};
+			//$.getJSON().. 사용하여 삭제 처리를 하세요 
+			//$.getJSON('CommentDel.jsp',data)
+			//각자 코드 구현
+			$.getJSON('CommentDel.jsp', data, function(data) {
+				console.log(data);
+				  $('#container').find("table tr").not(":first").remove();
+				  $.each(data, function(){
+					  $('#container').find("table tr:last").after(
+							  "<tr>"
+                + " <td>" + this.seq + "</td>"
+                + " <td>" + this.comment + "</td>"
+                + " <td><button seq='" + this.seq +"'>삭제</button></td>"
+                + "</tr>"
+              );
+					  });
+				  $('#comment').val();
 			});
-			
-			
-			
-			
-			
 		});
-	
-	</script>
+
+	});
+</script>
 </head>
 <body>
 	<table width="700px" border="1">
 		<tr>
-			<th width="200px">번호</th>	
+			<th width="200px">번호</th>
 			<td><%=bbsSeq%></td>
 		</tr>
 		<tr>
-			<th width="200px">제목</th>	
+			<th width="200px">제목</th>
 			<td>Jquery 넘 재미있어요</td>
 		</tr>
 		<tr>
-			<th width="200px">내용</th>	
+			<th width="200px">내용</th>
 			<td>당황하지 않고 Jquery 보면...</td>
 		</tr>
 	</table>
 	<br>
 	<!-- 덧글 입력  -->
 	<div>
-		<input type="text" name="comment" id="comment" style="width: 600px;" placeholder="덧글을 입력하세요"> 
+		<input type="text" name="comment" id="comment" style="width: 600px;"
+			placeholder="덧글을 입력하세요">
 		<button id="addBtn">덧글등록</button>
 		<br>
 		<div id="container">
@@ -136,18 +146,18 @@
 					<td>삭제</td>
 				</tr>
 				<%
-					for(int k = 0 ; k < commentlist.size() ; k++){
-						CommentVO vo = commentlist.get(k);
-				%>		
-						<tr>
-							<td><%= vo.getSeq() %></td>
-							<td><%= vo.getComment() %></td>
-							<td>
-								<button seq="<%=vo.getSeq()%>">삭제</button>
-							</td>
-						</tr>		
-				<%		
-					}				
+				  for (int k = 0; k < commentlist.size(); k++) {
+				    CommentVO vo = commentlist.get(k);
+				%>
+				<tr>
+					<td><%=vo.getSeq()%></td>
+					<td><%=vo.getComment()%></td>
+					<td>
+						<button seq="<%=vo.getSeq()%>">삭제</button>
+					</td>
+				</tr>
+				<%
+				  }
 				%>
 			</table>
 		</div>
