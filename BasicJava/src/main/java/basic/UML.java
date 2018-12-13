@@ -119,6 +119,6 @@ class Transaction {
 
 public class UML {
   public static void main(String[] args) {
-    Bank bank = new Bank();
+    
   }
 }
