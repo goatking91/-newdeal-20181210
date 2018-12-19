@@ -3,9 +3,7 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
-
 import oracle.jdbc.OracleTypes;
-import oracle.jdbc.oracore.OracleType;
 
 /*
 create or replace procedure usp_emplist
@@ -41,7 +39,7 @@ public class Ex09_Oracle_CallableStatement {
 			cstmt.setInt(1, 1000);
 			cstmt.registerOutParameter(2, OracleTypes.CURSOR);
 			
-		    boolean result = cstmt.execute();
+		    cstmt.execute();
 		    
 		    rs = (ResultSet)cstmt.getObject(2); // 주소정보 얻어오기
 			
