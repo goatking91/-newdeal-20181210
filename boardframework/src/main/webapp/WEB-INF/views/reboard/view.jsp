@@ -13,23 +13,33 @@
     control="${root}/reboard";
         
     initVars();
+    
     $(".writeBtn").click(function() {
       $("#commonForm").attr("method", "get").attr("action", writepath).submit();
     });
+    
+    $(".replyBtn").click(function() {
+    	$("#seq").val("${article.seq}");
+      $("#commonForm").attr("method", "get").attr("action", replypath).submit();
+    });
+    
     $(".newpage").click(function() {
     	  $("#pg").val(1);
     	  $("#key").val("");
     	  $("#word").val("");
         $("#commonForm").attr("method", "get").attr("action", listpath).submit();
     });
+    
     $(".mvpage").click(function() {
         $("#commonForm").attr("method", "get").attr("action", listpath).submit();
     });
+    
   });
 
 
 </script>
 <!-- title -->
+
 <table width="100%" cellpadding="0" cellspacing="0" border="0">
 	<tr>
 		<td><img src="${root}/img/board/m_icon_board.gif" width="9"
@@ -52,7 +62,7 @@
 		
 		  <img class="writeBtn" src="${root}/img/board/btn_write_01.gif" 
 		  width="64" height="22" border="0" align="absmiddle" alt="글쓰기"> 
-		  <img src="${root}/img/board/btn_reply.gif" width="40" height="22"
+		  <img class="replyBtn" src="${root}/img/board/btn_reply.gif" width="40" height="22"
 			border="0" align="absmiddle" alt="답글">
 			
 		</td>
@@ -138,7 +148,7 @@
     
       <img class="writeBtn" src="${root}/img/board/btn_write_01.gif" 
       width="64" height="22" border="0" align="absmiddle" alt="글쓰기"> 
-      <img src="${root}/img/board/btn_reply.gif" width="40" height="22"
+      <img class="replyBtn" src="${root}/img/board/btn_reply.gif" width="40" height="22"
       border="0" align="absmiddle" alt="답글">
       
     </td>

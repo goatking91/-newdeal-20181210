@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/public.jsp" %>
-
 <script type="text/javascript">
 function writeArticle(){
 	if(document.writeForm.subject.value == ""){
@@ -11,12 +10,11 @@ function writeArticle(){
 		alert("내용을 입력하세요");
 		return;
 	}else{
-		document.writeForm.action = "";
+		document.writeForm.action = "${root}/board/write.bit";
 		document.writeForm.submit();
 	}
 }
 </script>
-
 <!-- title -->
 <table width="100%" cellpadding="0" cellspacing="0" border="0">
 	<tr>
@@ -48,10 +46,10 @@ function writeArticle(){
 	style="margin: 0px">
 <div id="attach_file_hdn"></div>
 
-<input type="hidden" name="" value="">
-<input type="hidden" name="" value="">
-<input type="hidden" name="" value="">
-<input type="hidden" name="" value="">
+<input type="hidden" name="bcode" value="${bcode }">
+<input type="hidden" name="pg" value="1">
+<input type="hidden" name="key" value="">
+<input type="hidden" name="word" value="">
 
 <table border="0" cellpadding="5" cellspacing="0" width="630"
 	style="table-layout: fixed">

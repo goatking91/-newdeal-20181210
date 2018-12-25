@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/public.jsp" %>
 
-
 <table width="100%" cellpadding="6" cellspacing="2" border="0"
 	bgcolor="#ffffff" style="border: #e1e1e1 solid 1px">
 	<tr>

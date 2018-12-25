@@ -5,6 +5,7 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import com.bit.board.dao.ReboardDao;
 import com.bit.board.model.ReboardDto;
 import com.bit.common.dao.CommonDao;
@@ -14,14 +15,14 @@ import com.bit.util.BoardConstance;
 public class ReboardServiceImpl implements ReboardService {
 
   @Autowired
-  private SqlSession sqlSesson;
+  private SqlSession sqlSession;
   
   @Override
   public int writeArticle(ReboardDto reboardDto) {
-    int seq = sqlSesson.getMapper(CommonDao.class).getNextSeq();
+    int seq = sqlSession.getMapper(CommonDao.class).getNextSeq();
     reboardDto.setSeq(seq);
     reboardDto.setRef(seq);
-    int cnt = sqlSesson.getMapper(ReboardDao.class).writeArticle(reboardDto);
+    int cnt = sqlSession.getMapper(ReboardDao.class).writeArticle(reboardDto);
     return cnt != 0 ? seq : 0;
   }
 
@@ -32,22 +33,34 @@ public class ReboardServiceImpl implements ReboardService {
     int start = end - BoardConstance.LIST_COUNT;
     param.put("start", Integer.toString(start));
     param.put("end", Integer.toString(end));
-    return sqlSesson.getMapper(ReboardDao.class).listArticle(param);
+    return sqlSession.getMapper(ReboardDao.class).listArticle(param);
   }
 
   @Override
   public ReboardDto viewArticle(int seq) {
-    ReboardDto reboardDto = sqlSesson.getMapper(ReboardDao.class).viewArticle(seq);
+    ReboardDto reboardDto = sqlSession.getMapper(ReboardDao.class).viewArticle(seq);
     if(reboardDto != null) {
-      sqlSesson.getMapper(CommonDao.class).updateHit(seq);
+      sqlSession.getMapper(CommonDao.class).updateHit(seq);
       reboardDto.setContent(reboardDto.getContent().replace("\n", "<br>"));
     }
     return reboardDto;
   }
+  
+  @Override
+  public ReboardDto getArticle(int seq) {
+    return sqlSession.getMapper(ReboardDao.class).viewArticle(seq);
+  }
 
   @Override
+  @Transactional
   public int replyArticle(ReboardDto reboardDto) {
-    return 0;
+    int seq = sqlSession.getMapper(CommonDao.class).getNextSeq();
+    reboardDto.setSeq(seq);
+    ReboardDao reboardDao = sqlSession.getMapper(ReboardDao.class);
+    reboardDao.updateStep(reboardDto);
+    reboardDao.replyArticle(reboardDto);
+    reboardDao.updateReply(reboardDto.getPseq());
+    return seq;
   }
 
   @Override
@@ -59,5 +72,6 @@ public class ReboardServiceImpl implements ReboardService {
   public void deleteArticle(int seq) {
 
   }
+
 
 }
